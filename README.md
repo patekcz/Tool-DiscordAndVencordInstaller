@@ -1,96 +1,105 @@
-# Discord Canary + Vencord - Instalátor pro Linux
+# Discord Canary + Vencord - Linux Installer
 
-Jednoduchý a výkonný instalátor Discord Canary s možností instalace Vencord rozšíření pro Linux.
+A simple and powerful installer for Discord Canary with optional Vencord extension installation for Linux.
 
-## Rychlý start - jediný příkaz
+## Quick Start - Single Command
 
-Pro rychlou instalaci přímo z GitHub můžete použít tento příkaz:
+For quick installation directly from GitHub, you can use this command:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/patekcz/Tool-DiscordAndVencordInstaller/main/install.sh | bash
 ```
 
-Tím spustíte instalátor v interaktivním režimu, který vás provede celým procesem.
+This will run the installer in interactive mode, guiding you through the entire process.
 
-## Pokročilé příkazy
+## Advanced Commands
 
-### Kompletní instalace s Vencordem a .desktop souborem
+### Complete installation with Vencord and .desktop file
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/patekcz/Tool-DiscordAndVencordInstaller/main/install.sh | bash -s -- --installVencord --createDesktop
 ```
 
-### Instalace bez Vencordu
+### Installation without Vencord
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/patekcz/Tool-DiscordAndVencordInstaller/main/install.sh | bash -s -- --skipVencord
 ```
 
-### Instalace do vlastního adresáře
+### Installation to custom directory
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/patekcz/Tool-DiscordAndVencordInstaller/main/install.sh | bash -s -- --installDirName=$HOME/Applications/DiscordCanary
 ```
 
-### Vynucená reinstalace
+### Forced reinstallation
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/patekcz/Tool-DiscordAndVencordInstaller/main/install.sh | bash -s -- --force
 ```
 
-## Funkce
+### Forced Vencord reinstallation without .desktop
 
-* Automatická instalace nejnovější verze Discord Canary
-* Volitelná instalace rozšíření Vencord
-* Vytvoření .desktop souboru pro snadné spuštění
-* Interaktivní i neinteraktivní režim
-* Kontrola verze a podpora aktualizací
-* Automatická kontrola a instalace závislostí
+```bash
+curl -fsSL https://raw.githubusercontent.com/patekcz/Tool-DiscordAndVencordInstaller/main/install.sh | bash -s -- --forceVencord --skipDesktop
+```
 
-## Požadavky
+## Features
 
-Skript automaticky zkontroluje a případně nainstaluje všechny potřebné závislosti:
+* Automatic installation of the latest Discord Canary version
+* Optional Vencord extension installation
+* Creation of .desktop file for easy launching
+* Interactive and non-interactive modes
+* Version checking and update support
+* Automatic dependency checking and installation
+* Forced reinstallation options for both Discord and Vencord
+
+## Requirements
+
+The script automatically checks and installs all necessary dependencies:
 
 * curl
 * wget
 * tar
 * rsync
-* nodejs (pouze pokud instalujete Vencord)
+* nodejs (only if installing Vencord)
 
-## Použití přes stažení skriptu
+## Usage via Script Download
 
-Pokud preferujete nejprve stáhnout skript a pak jej spustit:
+If you prefer to download the script first and then run it:
 
 ```bash
-# Stažení skriptu
+# Download the script
 curl -fsSL -o install.sh https://raw.githubusercontent.com/patekcz/Tool-DiscordAndVencordInstaller/main/install.sh
 
-# Nastavení oprávnění
+# Set permissions
 chmod +x install.sh
 
-# Spuštění skriptu
+# Run the script
 ./install.sh
 ```
 
-## Parametry příkazové řádky
+## Command Line Parameters
 
-* `--installDirName=CESTA` - Specifikuje instalační adresář (výchozí: $HOME/Programs/DiscordCanary)
-* `--createDesktop` - Vytvoří .desktop soubor pro snadné spouštění
-* `--skipVencord` - Přeskočí instalaci Vencordu
-* `--installVencord` - Instaluje Vencord (výchozí)
-* `--force` - Vynucená instalace (přepíše existující soubory)
-* `--interactive` - Vynutí interaktivní režim
-* `--help` - Zobrazí nápovědu
+* `--installDirName=PATH` - Specifies installation directory (default: $HOME/Programs/DiscordCanary)
+* `--createDesktop` - Creates .desktop file for easy launching
+* `--skipDesktop` - Skips .desktop file creation
+* `--skipVencord` - Skips Vencord installation
+* `--installVencord` - Installs Vencord (default)
+* `--force` - Forced installation (overwrites existing files)
+* `--forceVencord` - Forced Vencord reinstallation
+* `--interactive` - Forces interactive mode
+* `--help` - Shows help
 
-## Odinstalace
+## Uninstallation
 
-Pro odinstalaci Discord Canary a Vencord jednoduše odstraňte instalační adresář a .desktop soubor:
+To uninstall Discord Canary and Vencord, simply remove the installation directory and .desktop file:
 
 ```bash
 rm -rf ~/Programs/DiscordCanary
 rm ~/.local/share/applications/discord-canary-vencord.desktop
 ```
 
-## Licence
+## License
 
-Tento skript je poskytován zdarma k použití, úpravám a redistribuci.
+This script is provided free for use, modification, and redistribution.

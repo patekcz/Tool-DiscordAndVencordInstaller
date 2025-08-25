@@ -31,6 +31,7 @@ CREATE_DESKTOP=$DEFAULT_CREATE_DESKTOP
 INSTALL_VENCORD=$DEFAULT_INSTALL_VENCORD
 INTERACTIVE=true
 FORCE_INSTALL=false
+FORCE_VENCORD=false
 
 # Funkce pro vypsání boxu
 print_box() {
@@ -108,6 +109,10 @@ for arg in "$@"; do
       CREATE_DESKTOP=true
       INTERACTIVE=false
       ;;
+    --skipDesktop)
+      CREATE_DESKTOP=false
+      INTERACTIVE=false
+      ;;
     --skipVencord)
       INSTALL_VENCORD=false
       INTERACTIVE=false
@@ -119,6 +124,9 @@ for arg in "$@"; do
     --force)
       FORCE_INSTALL=true
       ;;
+    --forceVencord)
+      FORCE_VENCORD=true
+      ;;
     --interactive)
       INTERACTIVE=true
       ;;
@@ -127,9 +135,11 @@ for arg in "$@"; do
       echo -e "${BOLD}Parametry:${NC}"
       echo "  --installDirName=CESTA    Specifikuje instalační adresář (výchozí: $DEFAULT_INSTALL_DIR)"
       echo "  --createDesktop           Vytvoří .desktop soubor pro snadné spouštění"
+      echo "  --skipDesktop             Přeskočí vytvoření .desktop souboru"
       echo "  --skipVencord             Přeskočí instalaci Vencordu"
       echo "  --installVencord          Instaluje Vencord (výchozí)"
       echo "  --force                   Vynucená instalace (přepíše existující soubory)"
+      echo "  --forceVencord            Vynucená reinstalace Vencordu"
       echo "  --interactive             Vynutí interaktivní režim i při použití dalších parametrů"
       echo "  --help                    Zobrazí tuto nápovědu"
       echo ""
@@ -281,7 +291,16 @@ fi
 if [ "$INSTALL_VENCORD" = true ]; then
   print_section "Instalace Vencord"
   
-  print_step "Stahuji Vencord instalátor..."
+  # Kontrola, zda je Vencord již nainstalován a zda je požadována vynucená reinstalace
+  if [ -d "$INSTALL_DIR/resources/app.asar.unpacked/node_modules/vencord-desktop" ] && [ "$FORCE_VENCORD" = false ]; then
+    print_warning "Vencord je již nainstalován. Použijte --forceVencord pro vynucenou reinstalaci."
+    print_success "Používá se existující instalace Vencord."
+  else
+    if [ "$FORCE_VENCORD" = true ]; then
+      print_step "Vynucená reinstalace Vencord..."
+    fi
+    
+    print_step "Stahuji Vencord instalátor..."
   wget --progress=bar:force:noscroll -O "$VENCORD_CLI" "$DEFAULT_VENCORD_URL" 2>&1 | stdbuf -o0 tr '\r' '\n' | grep --line-buffered -o "[0-9]*%" | awk '{ printf "\r\x1b[32m⬇️ Stahování: %s\x1b[0m", $0; fflush(stdout); } END { print ""; }'
   chmod +x "$VENCORD_CLI"
   
@@ -364,6 +383,7 @@ EOF
   print_step "Instaluji Vencord..."
   node "$VENCORD_SCRIPT"
   print_success "Vencord úspěšně nainstalován."
+  fi
 fi
 
 # Vytvoření .desktop souboru, pokud je požadováno
